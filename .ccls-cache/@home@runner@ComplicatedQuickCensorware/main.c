@@ -5,13 +5,31 @@
 */
 #include <stdio.h>
 
-
 /*
  * Computes the dimensional weight of a box from 
  * input provided by the user
- *
+ * C Programming A Modern Approach by K.N. King
 */
-int main(void) /*The Beginning of the program*/
+
+#define FREEZING_PT 32.0f
+#define SCALE_FACTOR (5.0f / 9.0f)
+
+void FahrenToCelsius()
+{
+  float fahrenheit, celsius;
+
+  printf("Enter Fahrenheit temparature: ");
+
+  scanf("%f", &fahrenheit);
+
+  celsius = (fahrenheit - FREEZING_PT) * SCALE_FACTOR;
+
+  printf("Celsius equivalent: % .1f\n", celsius);
+}
+
+#define INCHES_PER_POUND 166
+
+void CalcBox()
 {
   int height, length, width, volume, weight;
 
@@ -22,10 +40,15 @@ int main(void) /*The Beginning of the program*/
   printf("Enter width of box:");
   scanf("%d",&width);
   volume = height * length * width;
-  weight = (volume + 165) / 166;
+  weight = (volume + INCHES_PER_POUND - 1) / INCHES_PER_POUND;
 
   printf("Volume (cubic inches) : %d\n",volume);
   printf("Dimensional weight (pounds) : %d\n",weight);
+}
 
+int main(void) /*The Beginning of the program*/
+{
+  project_five();
   return 0;
 }
+

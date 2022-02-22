@@ -5,7 +5,6 @@
 */
 #include <stdio.h>
 
-
 /*
  * Computes the dimensional weight of a box from 
  * input provided by the user
@@ -49,8 +48,7 @@ void CalcBox()
 
 int main(void) /*The Beginning of the program*/
 {
-
-  FahrenToCelsius();
+  project_five();
   return 0;
 }
 
