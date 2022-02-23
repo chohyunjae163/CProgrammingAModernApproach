@@ -89,3 +89,102 @@ float project_five()
   scanf("%f", &x);
   printf("3x⁵ + 2x⁴ - 5x³ - x² + 7x - 6 = %f\n", ((3 * (pow(x,5))) + ( 2 * (pow(x,4))) - (5*(pow(x,3))) - (pow(x,2)) + (7*x) - 6));
 }
+
+/*
+ * Modify the program of Programming Project 5 so that the polynomial is evaluated using hte
+ * following fomula
+ * ((((3x + 2)x - 5)x -1)x + 7)x -6
+*/
+
+float project_six()
+{
+  printf("enter a value: ");
+  float x = 0;
+  scanf("%f", &x);
+  printf("((((3x + 2)x - 5)x -1)x + 7)x -6 = %f\n",(((((3*x +2)*x -5)*x -1)*x + 7)*x - 6));
+}
+
+/*
+ * Write a program taht asks the user to enter a U.S. dollar amout and shows how to pay that amount
+ * using the smallest number of $20, $10, $5 and $1 bills:
+ *
+*/
+
+#define TWENTY 20
+#define TEN 10
+#define FIVE 5
+#define ONE 1
+
+void project_seven()
+{
+  printf("enter a value: ");
+  int amount = 0;
+  scanf("%d", &amount);
+  int twenty_dollar_bill = 0;
+  int ten_dollar_bill  = 0;
+  int five_dollar_bill = 0;
+  int one_dollar_bill = 0;
+  if( amount >= TWENTY)
+  {
+    twenty_dollar_bill = amount / TWENTY;
+    amount -= (twenty_dollar_bill * TWENTY);
+  }
+
+  if(amount >= TEN)
+  {
+    ten_dollar_bill = amount / TEN;
+    amount -= (ten_dollar_bill * TEN);
+  }
+
+  if(amount >= FIVE)
+  {
+    five_dollar_bill = amount / FIVE;
+    amount -= (five_dollar_bill * FIVE);
+  }
+
+  if(amount >= ONE)
+  {
+    one_dollar_bill = amount / ONE;
+  }
+
+  printf("$20 bills : %d\n", twenty_dollar_bill);
+  printf("$10 bills : %d\n", ten_dollar_bill);
+  printf("$5 bills : %d\n", five_dollar_bill);
+  printf("$1 bills : %d\n", one_dollar_bill);
+    
+}
+
+/*
+ * Write a program that calculates teh remaining balance on a loan after the fisrt, second and
+ * third monthly payments.
+ * Display each balance with two digists after the decimal point
+*/
+
+void project_eight()
+{
+  
+  
+  printf("enter amount of loan: ");
+  float loan = 0;
+  scanf("%f", &loan);
+
+  float interest = 0;
+  printf("enter interest rate: ");
+  
+  scanf("%f", &interest);
+
+  printf("enter monthly payment: ");
+  float payment = 0;
+  scanf("%f", &payment);
+  
+  printf("\n\n");
+  
+  loan -= payment;
+  printf("Balance remaining after first payment: %.2f\n",loan);
+  loan += (payment * (interest / 100));
+  loan -= payment;
+  printf("Balance remaining after second payment: %.2f\n",loan);
+  loan += (payment * (interest / 100));
+  loan -= payment;
+  printf("Balance remaining after third payment: %.2f\n",loan);
+}
