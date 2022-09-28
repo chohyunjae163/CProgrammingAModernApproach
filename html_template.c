@@ -3,8 +3,9 @@
 // program : wrap the input text file with html5 template 
 
 #include <stdio.h>
-#define TEST(NAME)  \
-	"helllo world" NAME
+#include <errno.h>
+#include <string.h>
+extern int errno ;
 
 #define WRAP_HTML(MAIN_CONTENT)	" \
 <!DOCTYPE html>\n \
@@ -37,18 +38,20 @@
 
 
 
-int main()
+int main(int argc, char** argv)
 {
 	//read the text file
-	//const char* filename = argv[1];
-	//FILE* file;
-	//file = fopen(filename,"r");
-	//if(file == NULL)
-	//{
-	//    return 1;
-	//}
-	//fclose(file);
-	printf(WRAP_HTML("this is main content"));
-	//printf(TEST("hyunjae"));
+	const char* filename = argv[1];
+	FILE* file;
+	file = fopen(filename,"r");
+	if(file == NULL)
+	{
+		printf("error - %d : %s \n", errno, strerror(errno));
+	    return 1;
+	}
+	
+	fclose(file);
+	//printf(WRAP_HTML("this is main content"));
+	
 	return 0;
 }
