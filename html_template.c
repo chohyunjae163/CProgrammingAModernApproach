@@ -64,11 +64,15 @@ int main(int argc, char** argv)
 		content[index] = (char)c;
 		index += 1;
 	}
-	content[index] = '\0';
 	fclose(file);
+	content[index] = '\0';
+	file = fopen("out.html","w");
 	char buffer[BUFF_SIZE];
 	const char* wrapped_content = wrap_content(buffer,content);
 	printf("%s", wrapped_content);
+	
+	fputs(wrapped_content,file);
+	fclose(file);
 	return 0;
 }
 
