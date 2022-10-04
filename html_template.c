@@ -19,11 +19,11 @@ extern int errno ;
       <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n \
       <title>my devlog</title>\n \
       <style>\n \
-	  	.code { \n \
-	   	  background-color: #666666;\n \
-	   	  border-radius: 25px;\n \
-	   	  padding: 20px;\n \
-		} \n \
+	.code { \n \
+	  background-color: #666666;\n \
+	  border-radius: 25px;\n \
+	  padding: 20px;\n \
+	} \n \
         a:link { \n \
           color: #F8F8F8;\n \
       	}\n \
