@@ -32,7 +32,7 @@ extern int errno ;
       <hr />\n \
       <div style=\"text-align: center;\">\n \
         <main style=\"display: inline-block; text-align: left\">\n"   \
-		"\t\t"
+		"\n"
 
 #define OTHER_HALF_TEMPLATE " \
 		\n \
@@ -42,67 +42,91 @@ extern int errno ;
 </html>\n "
 
 const char* wrap_content(char buffer[], const char* content);
+void append(char dest[],const char* src);
 
 int main(int argc, char** argv)
 {
 	//read the text file
 	const char* filename = argv[1];
 	FILE* file;
-	file = fopen(filename,"r");
-	
+	file = fopen(filename,"r");	
 	if(file == NULL)
 	{
-		//printf("error - %d : %s \n", errno, strerror(errno));
-	    //return 1;
+		printf("error - %d : %s \n", errno, strerror(errno));
+		printf("please provide a filename.");
+	    return 1;
 	}
-	//1 megabytes
-	
-	char content[BUFF_SIZE] = {"\nhello this is my c program.\n\0"};
-	// int index = 0;
-	// int c;
-	// while ( ( c = fgetc(file) ) != EOF)
-	// {
-	// 	content[index] = (char)c;
-	// 	index += 1;
-	// }
-	// content[index] = '\0';
-	// fclose(file);
+	char content[BUFF_SIZE];
+	int index = 0;
+	int c;
+	while ( ( c = fgetc(file) ) != EOF)
+	{
+		content[index] = (char)c;
+		index += 1;
+	}
+	content[index] = '\0';
+	fclose(file);
 	char buffer[BUFF_SIZE];
 	const char* wrapped_content = wrap_content(buffer,content);
 	printf("%s", wrapped_content);
 	return 0;
 }
 
+unsigned int char_arr_len(char str[])
+{
+	unsigned int index = 0;
+	while(*str != '\0')
+	{
+		++str;
+		index++;
+	}
+	return index;
+}
+
+void append(char dest[],const char* src)
+{
+	unsigned int index = 0;
+	unsigned int dest_size = char_arr_len(dest);
+	char c;
+	while( (c = src[index]) != '\0')
+	{
+		dest[dest_size] = c;
+		index++;
+		dest_size++;
+	}
+}
 
 const char* wrap_content(char buffer[], const char* content)
 {
-	int buffer_size = 0;
-	int index = 0;
 	char* ptr_first_half = FIRST_HALF_TEMPLATE;
-	char c;
-	while( (c = ptr_first_half[index]) != '\0')
-	{
-		buffer[buffer_size] = c;
-		index = index + 1;
-		buffer_size = buffer_size + 1;
-	}
-	index = 0;
-	while((c = content[index]) != '\0')
-	{
-		buffer[buffer_size] = c;
-		buffer_size = buffer_size + 1;
-		index = index + 1;
-	}
-	
-	
-	index = 0;
 	char* ptr_other_half  = OTHER_HALF_TEMPLATE;
-	while( (c = ptr_other_half[index]) != '\0')
-	{
-		buffer[buffer_size] = c;
-		index = index +  1;
-		buffer_size = buffer_size + 1;
-	}
-	buffer[buffer_size] = '\0';
+	append(buffer,ptr_first_half);
+	append(buffer,content);
+	append(buffer,ptr_other_half);
 	return buffer;
+	
+	// a recurring logic. can be 
+	// while( (c = ptr_first_half[index]) != '\0')
+	// {
+	// 	buffer[buffer_size] = c;
+	// 	buffer_size = buffer_size + 1;
+	// 	index = index + 1;
+	// }
+	// index = 0;
+	// while((c = content[index]) != '\0')
+	// {
+	// 	buffer[buffer_size] = c;
+	// 	buffer_size = buffer_size + 1;
+	// 	index = index + 1;
+	// }
+	// index = 0;
+	
+	// while( (c = ptr_other_half[index]) != '\0')
+	// {
+	// 	buffer[buffer_size] = c;
+	// 	index = index +  1;
+	// 	buffer_size = buffer_size + 1;
+	// }
+	
+
 }
