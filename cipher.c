@@ -1,6 +1,4 @@
 //https://www.hackerrank.com/challenges/cipher/problem?isFullScreen=true\
-//timeout solution...TT
-
 
 char* cipher(int k, char* s, int n) {
     char* encoded = s;
