@@ -8,7 +8,7 @@ char* cipher(int k, char* s, int n) {
     {
         ++encodedlength;
     }
-    int decodedLength = encodedlength - (k - 1);
+    int decodedLength = encodedlength - shifted;
     char* decoded = (char*)calloc(decodedLength, sizeof(char));
     decoded[0] = s[0];  //the fist digit case
     
