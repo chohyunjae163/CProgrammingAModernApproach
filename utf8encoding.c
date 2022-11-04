@@ -44,7 +44,7 @@ int main()
     //0041 -> 65 -> 01000001 ->
     printf("\n=================\n");
     printf("encoding starts!\n");
-    char* codepoint = "D55C";
+    char* codepoint = "0024";
     printf("codepoint : %s\n", codepoint);
     int index = 0 ;
     while(codepoint[index] != '\0') 
@@ -80,9 +80,50 @@ char* decoder(char* encoded)
     int index = 0;
     while(encoded[index] != '\0')
     {
-        
+        ++index; 
+    }
+    int encoded_len = index;
+    index = 0;
+    static char decoded[6] = {'0','0','0','0','0','0'};
+    char binary[32];
+    memset(binary,0,32);
+    int binary_len_index = 31;
+    while(encoded[index] != '\0')
+    {
+        char* b;
+        b = hexToBinary(encoded[index]);
+        binary[binary_len_index - (index * 4)] = b[0];
+        binary[binary_len_index - (index * 4) - 1] = b[1];
+        binary[binary_len_index - (index * 4) - 2] = b[2];
+        binary[binary_len_index - (index * 4) - 3] = b[3];
         index++;
     }
+    
+    switch(encoded_len)
+    {
+        case 2:
+        {
+            decoded[2] = binaryToHex((char[]){binary[31],binary[30],binary[29],binary[28]});
+            decoded[3] = binaryToHex((char[]){binary[27],binary[26],binary[25],binary[24]});
+            decoded[4] = '\0';
+        }
+        break;
+        case 4:
+        {
+            //needs masking 
+            //110xxxxx	10xxxxxx
+            //11000010  10100011
+            //-----------------
+            
+            for(int i = 0; i < 4; ++i)
+            {
+                decoded[i] = binaryToHex((char[]){binary[i],binary[(i * 4) + 1],binary[(i * 4) + 2],binary[(i * 4) + 3]});
+            }
+            decoded[4] = '\0';
+        }
+        break;
+    }
+    return decoded;
 }
 
 char* encoder(char* codepoint)
@@ -111,7 +152,7 @@ char* encoder(char* codepoint)
         {
             //110xxxxx	10xxxxxx
             //11 bits.
-            char binaryUTF[16] ={
+            char binaryUTF[16] = {
                 '1','1','0','0','0','0','0','0',
                 '1','0','0','0','0','0','0','0'
                 
