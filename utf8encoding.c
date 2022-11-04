@@ -15,8 +15,8 @@ static int codepoint_len = 0;
 const int HEX = 16;
 
 
-
-char* toUTF8(char* codepoint);
+char* decoder(char* encoded);
+char* encoder(char* codepoint);
 int calcUtfBytes(char* codepoint);
 int power(int base, int n);
 char* hexToBinary(char c);
@@ -42,8 +42,9 @@ int main()
     */
     
     //0041 -> 65 -> 01000001 ->
-
-    char* codepoint = "10348";
+    printf("\n=================\n");
+    printf("encoding starts!\n");
+    char* codepoint = "D55C";
     printf("codepoint : %s\n", codepoint);
     int index = 0 ;
     while(codepoint[index] != '\0') 
@@ -51,7 +52,7 @@ int main()
         index++;
         codepoint_len++;
     }
-    char* UTF8encoded = toUTF8(codepoint);
+    char* UTF8encoded = encoder(codepoint);
     printf("UTF8encoded : ");
     int i = 0 ;
     while(UTF8encoded[i] != '\0')
@@ -64,10 +65,27 @@ int main()
         }
     }
     
+    printf("\n=================\n");
+    printf("decoding starts!\n");
+    printf("encoded : %s\n", UTF8encoded);
+    char* decoded_codepoint = decoder(UTF8encoded);
+    printf("decoded_codepoint : %s", decoded_codepoint);
+    
+    
     return 0;
 }
 
-char* toUTF8(char* codepoint)
+char* decoder(char* encoded)
+{
+    int index = 0;
+    while(encoded[index] != '\0')
+    {
+        
+        index++;
+    }
+}
+
+char* encoder(char* codepoint)
 {
     static char encoding[9];
     memset(encoding,0,9);
@@ -150,7 +168,8 @@ char* toUTF8(char* codepoint)
         }
         case 4:
         {
-             char binaryUTF[32] = {
+            //11110xxx	10xxxxxx	10xxxxxx	10xxxxxx
+            char binaryUTF[32] = {
                 '1','1','1','1','0','0','0','0',
                 '1','0','0','0','0','0','0','0',
                 '1','0','0','0','0','0','0','0',
@@ -159,31 +178,23 @@ char* toUTF8(char* codepoint)
             for(int i = 31; i >=26; -- i)
             {
                 binaryUTF[i] = binary[binaryIndex];
-                printf("%c",binary[binaryIndex]);
                 --binaryIndex;
             }
-            printf("\n");
             for(int i = 23; i >= 18; -- i)
             {
                 binaryUTF[i] = binary[binaryIndex];
-                printf("%c",binary[binaryIndex]);
                 --binaryIndex;
             }
-            printf("\n");
             for(int i = 15; i >= 10;--i)
             {
                 binaryUTF[i] = binary[binaryIndex];
-                printf("%c",binary[binaryIndex]);
                 --binaryIndex;
             }
-           printf("\n");
             for(int i = 7; i >= 6; --i)
             {
                 binaryUTF[i] = binary[binaryIndex];
-                printf("%c",binary[binaryIndex]);
                 --binaryIndex;
             }
-            printf("\n");
             for(int i = 0; i < 8; ++i)
             {
                 char b[4] = { binaryUTF[i * 4],  binaryUTF[i * 4 + 1] ,  binaryUTF[i * 4 + 2],  binaryUTF[i * 4 + 3]};
@@ -209,18 +220,6 @@ char* unicodeToBinary(char* codepoint)
         }
     }
     int index = 0;
-    printf("binary: ");
-    while(binary[index] != '\0')
-    {
-        printf("%c",binary[index]);
-        ++index;
-        if(index % 4 == 0) 
-        {
-           printf(" ");
-        }
-       
-    }
-    printf("\n");
     return binary;
 }
 
