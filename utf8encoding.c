@@ -44,7 +44,7 @@ int main()
     //0041 -> 65 -> 01000001 ->
     printf("\n=================\n");
     printf("encoding starts!\n");
-    char* codepoint = "0024";
+    char* codepoint = "10348";
     printf("codepoint : %s\n", codepoint);
     int index = 0 ;
     while(codepoint[index] != '\0') 
@@ -84,9 +84,14 @@ char* decoder(char* encoded)
     }
     int encoded_len = index;
     index = 0;
-    static char decoded[6] = {'0','0','0','0','0','0'};
+    static char decoded[6] = {'0','0','0','0','0','\0'};
     char binary[32];
-    memset(binary,0,32);
+    while(index < 32)
+    {
+        binary[index] = '0';
+        index++;
+    }
+    index = 0;
     int binary_len_index = 31;
     while(encoded[index] != '\0')
     {
@@ -110,18 +115,104 @@ char* decoder(char* encoded)
         break;
         case 4:
         {
-            //needs masking 
+            //needs 11 bits 
             //110xxxxx	10xxxxxx
-            //11000010  10100011
-            //-----------------
-            
-            for(int i = 0; i < 4; ++i)
+            char binary_code_point [11];
+            int index = 0;
+            while(index < 11)
             {
-                decoded[i] = binaryToHex((char[]){binary[i],binary[(i * 4) + 1],binary[(i * 4) + 2],binary[(i * 4) + 3]});
+                binary_code_point[index] = 'N';
+                index++;
             }
+            index = 0;
+            for(int i = 31; i > 26 ;--i)
+            {
+                binary_code_point[index] = binary[binary_len_index  - index - 3];
+                index++;
+            }
+            for(int i = 23; i > 17; --i)
+            {
+                binary_code_point[index] = binary[binary_len_index - index - 3 - 2];
+                index++;               
+            }
+            decoded[0] = '0';
+            decoded[1] = binaryToHex( (char[]) {'0',binary_code_point[0],binary_code_point[1], binary_code_point[2]});
+            decoded[2] = binaryToHex( (char[]) {binary_code_point[3],binary_code_point[4],binary_code_point[5], binary_code_point[6]});
+            decoded[3] = binaryToHex( (char[]) {binary_code_point[7],binary_code_point[8],binary_code_point[9], binary_code_point[10]});
             decoded[4] = '\0';
         }
         break;
+        case 6:
+        {
+            //needs 16 bits
+            //1110xxxx	10xxxxxx	10xxxxxx
+            char binary_code_point [16];
+            int index = 0;
+            while(index < 16)
+            {
+                binary_code_point[index] = 'N';
+                index++;
+            }
+            index = 0;
+            for(int i = 31; i > 27;--i)
+            {
+                binary_code_point[index] = binary[binary_len_index  - index - 4];
+                index++;
+            }
+            for(int i = 25; i > 19; --i)
+            {
+                binary_code_point[index] = binary[binary_len_index - index - 4 - 2];
+                index++;               
+            }
+            for(int i = 17; i > 11; --i)
+            {
+                binary_code_point[index] = binary[binary_len_index - index - 4 - 2 - 2];
+                index++;               
+            }
+            decoded[0] = binaryToHex( (char[]) {binary_code_point[0],binary_code_point[1], binary_code_point[2], binary_code_point[3]});
+            decoded[1] = binaryToHex( (char[]) {binary_code_point[4],binary_code_point[5],binary_code_point[6], binary_code_point[7]});
+            decoded[2] = binaryToHex( (char[]) {binary_code_point[8],binary_code_point[9],binary_code_point[10], binary_code_point[11]});
+            decoded[3] = binaryToHex( (char[]) {binary_code_point[12],binary_code_point[13],binary_code_point[14], binary_code_point[15]});
+            decoded[4] = '\0';
+            break;
+        }
+        case 8:
+        {
+            //needs 21 bits
+            char binary_code_point [21];
+            int index = 0;
+            while(index < 21)
+            {
+                binary_code_point[index] = 'N';
+                index++;
+            }
+            index = 0;
+            for(int i = 31; i > 28;--i)
+            {
+                binary_code_point[index] = binary[binary_len_index  - index - 5];
+                index++;
+            }
+            for(int i = 26; i > 20;--i)
+            {
+                binary_code_point[index] = binary[binary_len_index  - index - 5 - 2];
+                index++;
+            }
+            for(int i = 18; i > 12;--i)
+            {
+                binary_code_point[index] = binary[binary_len_index  - index - 5 - 2 - 2];
+                index++;
+            }
+            for(int i = 10; i > 4;--i)
+            {
+                binary_code_point[index] = binary[binary_len_index  - index - 5 - 2 - 2 - 2];
+                index++;
+            }
+            decoded[0] = binaryToHex( (char[]) {binary_code_point[1],binary_code_point[2], binary_code_point[3], binary_code_point[4]});
+            decoded[1] = binaryToHex( (char[]) {binary_code_point[5],binary_code_point[6],binary_code_point[7], binary_code_point[8]});
+            decoded[2] = binaryToHex( (char[]) {binary_code_point[9],binary_code_point[10],binary_code_point[11], binary_code_point[12]});
+            decoded[3] = binaryToHex( (char[]) {binary_code_point[13],binary_code_point[14],binary_code_point[15], binary_code_point[16]});
+            decoded[4] = binaryToHex( (char[]) {binary_code_point[17],binary_code_point[18],binary_code_point[19], binary_code_point[20]});
+        }
     }
     return decoded;
 }
@@ -384,4 +475,5 @@ int hexToDecimal(char c)
         return c - '0';
     }
 }
+
 
