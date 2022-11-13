@@ -111,7 +111,7 @@ String* replace_substring(String* s, const char* old, const char* new)
 	while(old[old_len++]);
 	while(new[new_len++]);
 
-	int occurance_count = 0;
+	int occurence_count = 0;
 	int index = 0;
 	//바뀌는 스트링 새로운 길이 구하기
 	while(index < s->len)
@@ -123,10 +123,10 @@ String* replace_substring(String* s, const char* old, const char* new)
 		    ++index;
 			  ++count;
 		}
-		occurrence += count == old_len - 1;
+		occurence_count += count == old_len - 1;
 		++index;
 	}
-	int new_str_len = s->len + (occurrence * (new_len - old_len));
+	int new_str_len = s->len + (occurence_count * (new_len - old_len));
 
     //새로운 길이의 스트링에다가 chars 바꿔치기
 	String* new_str = create_string(new_str_len);
