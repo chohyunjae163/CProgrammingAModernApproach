@@ -40,9 +40,8 @@ void delete_string(String* s)
 }
 
 //String assignment
-void assign_string(String* s, const char* str)
+void assign_string(String* s, const char* str, int length)
 {
-    int length = get_strlen(str);
 	if(s->len < length)
 	{
 		s->s = realloc(s->s, length + 1);
@@ -76,7 +75,7 @@ int compare_string(String* s1, String* s2)
 String* clone_string(String* s)
 {
 	String* clone = create_string(s->len);
-	assign_string(clone,s->s);
+	assign_string(clone,s->s,s->len);
 	return clone;
 }
 
@@ -99,7 +98,7 @@ String* extract_substring(char* s, int from, int to)
 {
 	int len = to - from;
 	String* slice = create_string(len + 1);
-	assign_string(slice,s + from);
+	assign_string(slice,s + from,len);
 	return slice;
 }
 
@@ -121,13 +120,18 @@ String* replace_substring(String* s, const char* old, const char* new)
 		while(count < old_len && old[old_index++] == s->s[index])
 		{
 		    ++index;
-			  ++count;
+			++count;
 		}
-		occurence_count += count == old_len - 1;
-		++index;
+		if(count == old_len - 1)
+		{
+		    occurence_count+=1;
+		}
+		else
+		{
+		    ++index;
+		}
 	}
 	int new_str_len = s->len + (occurence_count * (new_len - old_len));
-
     //새로운 길이의 스트링에다가 chars 바꿔치기
 	String* new_str = create_string(new_str_len);
 	int new_str_index = 0;
@@ -139,7 +143,7 @@ String* replace_substring(String* s, const char* old, const char* new)
 		while(count < old_len - 1 && old[old_index++]  == s->s[index])
 		{
 		    ++index;
-			  ++count;
+			++count;
 		}
 		if(count == old_len - 1 )
 		{
@@ -148,8 +152,12 @@ String* replace_substring(String* s, const char* old, const char* new)
 				new_str->s[new_str_index++] = new[i];
 			}
 		}
-		new_str->s[new_str_index++] = s->s[index];
-		++index;
+		else
+		{
+		    new_str->s[new_str_index++] = s->s[index];
+            ++index;		    
+		}
+
 	}
 
 	return new_str;
@@ -170,7 +178,7 @@ String* join_strings(char* s1, char* s2)
 int main()
 {
     String* s = create_string(10);
-    assign_string(s,"my name is hyunjae");
+    assign_string(s,"my name is hyunjae",20);
     printf("string: %s\n",s->s);
     String* clone = clone_string(s);
     printf("clone: %s\n",clone->s);
@@ -196,14 +204,14 @@ int main()
         printf("appending z to clone: ");
     append_char(clone,'z');
     printf("%s \n",s->s);
-    printf("extracting [1-3] from a string: ");
-    String* extracted = extract_substring(s->s, 1,3);
+    printf("extracting [3-7] from a string: ");
+    String* extracted = extract_substring(s->s, 3,7);
     printf("%s\n", extracted->s);
     printf("joining hyunjae + sooyoung ");
     String* joined =  join_strings("chohyunjae", "sooyoung");
     printf("%s\n",joined->s);
     String* intro = create_string(10);
-    assign_string(intro,"my name is hyunjae");
+    assign_string(intro,"my name is hyunjaehyunjae",40);
     printf("string: %s\n",intro->s);
     printf("replacing 'h' with 'm': ");
     String* replaced = replace_substring(intro, "hyunjae", "sooyoung");
