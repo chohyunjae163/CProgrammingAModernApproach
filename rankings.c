@@ -2,6 +2,7 @@
 // AUTHOR: HYUNJAECHO
 // DATE: 2022-11-15
 // PROGRAM: a variety of ranking methods
+// https://rosettacode.org/wiki/Ranking_methods
 */
 
 #include<stdio.h>
