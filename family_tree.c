@@ -1,11 +1,3 @@
-/******************************************************************************
-
-Welcome to GDB Online.
-GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
-C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
-Code, Compile, Run and Debug online from anywhere in world.
-
-*******************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -100,7 +92,7 @@ void draw_tree(struct Node* n, int child_count[], int level)
 int main()
 {
     //draw a tree
-    
+    printf("This is a family tree\n");
     //this is root
     struct Node* root = create_node('a');
     
@@ -128,7 +120,11 @@ int main()
     struct Node* n = create_node('n');
     m->sibling = n;
     struct Node* t = create_node('t');
-    n->child = t;    
+    n->child = t;
+    struct Node* a = create_node('a');
+    t->child = a;
+    struct Node* p = create_node('p');
+    a->child = p;
     
     
     //c family. c is b's sibling
@@ -180,6 +176,10 @@ b-c-z
 d-h-r-w-k-m-n
   |   |     |
   |   |     t
+  |   |     |
+  |   |     a
+  |   |     |
+  |   |     p
   |   |
   |   q
   |
