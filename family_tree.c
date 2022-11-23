@@ -1,3 +1,11 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -55,6 +63,7 @@ void draw_tree(struct Node* n, int child_count[], int level)
         }
         else
         {
+            //draw siblings' edges 
             for(int i = 0; i < level; ++i)
             {
                 if(child_count[i] > 0)
@@ -66,7 +75,10 @@ void draw_tree(struct Node* n, int child_count[], int level)
                     printf("  ");
                 }
             }
-            printf("|\n");
+            //draw self child's edge
+            printf("|");
+            printf("\n");//finish draw a must edge.
+            //take care of siblings' edges
             for(int i = 0; i < level; ++i)
             {
                 if(child_count[i] > 0)
@@ -124,6 +136,12 @@ int main()
     b->sibling = c;
     struct Node* e = create_node('e');
     c->child = e;
+    struct Node* j = create_node('j');
+    e->sibling = j;
+    struct Node* i = create_node('i');
+    j->sibling = i;
+    struct Node* o = create_node('o');
+    i->child = o;
     struct Node* y = create_node('y');
     e->child = y;
 
@@ -143,10 +161,8 @@ int main()
     return 0;
 }
 
-
 //OUTPUT
 /*
-1 2 3 
 a
 |
 b-c-z
@@ -155,7 +171,9 @@ b-c-z
 | | |
 | | x
 | |
-| e
+| e-j-i
+| |   |
+| |   o
 | |
 | y
 |
@@ -167,3 +185,4 @@ d-h-r-w-k-m-n
   |
   g
 */
+
