@@ -2,29 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 // visualize a tree!
-/*
-1 2 3 
-a
-|
-b-c-z
-| | |
-| | s
-| | |
-| | x
-| |
-| e
-| |
-| y
-|
-d-h-r-w-k-m-n
-  |   |     |
-  |   |     t
-  |   |
-  |   q
-  |
-  g
-*/
-
 
 struct Node {
     char data;
@@ -167,4 +144,26 @@ int main()
 }
 
 
-
+//OUTPUT
+/*
+1 2 3 
+a
+|
+b-c-z
+| | |
+| | s
+| | |
+| | x
+| |
+| e
+| |
+| y
+|
+d-h-r-w-k-m-n
+  |   |     |
+  |   |     t
+  |   |
+  |   q
+  |
+  g
+*/
