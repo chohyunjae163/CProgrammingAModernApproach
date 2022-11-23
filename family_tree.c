@@ -1,15 +1,29 @@
-/******************************************************************************
-
-Welcome to GDB Online.
-GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
-C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
-Code, Compile, Run and Debug online from anywhere in world.
-
-*******************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 // visualize a tree!
+/*
+1 2 3 
+a
+|
+b-c-z
+| | |
+| | s
+| | |
+| | x
+| |
+| e
+| |
+| y
+|
+d-h-r-w-k-m-n
+  |   |     |
+  |   |     t
+  |   |
+  |   q
+  |
+  g
+*/
 
 
 struct Node {
@@ -45,11 +59,13 @@ void destroy_tree(struct Node* n)
 
 void draw_tree(struct Node* n, int child_count[], int level)
 {
+    //print node's data first.
     printf("%c",n->data);
+    //if it has siblings, draw siblings next.
     if(n->sibling)
     {
-        printf("-");
-        child_count[level] = !!(n->child);
+        printf("-"); //this is a must.
+        child_count[level] = !!(n->child);  //it's necessary to store which sibling has a child.
         draw_tree(n->sibling,child_count, level + 1);
     }
     if(n->child)
