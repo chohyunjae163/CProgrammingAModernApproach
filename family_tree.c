@@ -1,3 +1,11 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -41,7 +49,6 @@ void draw_tree(struct Node* n, int child_count[], int level)
     if(n->sibling)
     {
         printf("-");
-        //int c = !!(n->child) + child_count;
         child_count[level] = !!(n->child);
         draw_tree(n->sibling,child_count, level + 1);
     }
@@ -109,6 +116,14 @@ int main()
     r->sibling = w;
     struct Node* q = create_node('q');
     w->child = q;
+    struct Node* k = create_node('k');
+    w->sibling = k;
+    struct Node* m = create_node('m');
+    k->sibling = m;
+    struct Node* n = create_node('n');
+    m->sibling = n;
+    struct Node* t = create_node('t');
+    n->child = t;    
     
     
     //c family. c is b's sibling
